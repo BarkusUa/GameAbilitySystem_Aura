@@ -16,6 +16,7 @@ AAuraEnemy::AAuraEnemy()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 }
@@ -27,6 +28,7 @@ void AAuraEnemy::HighlightActor()
 	GetMesh()->SetCustomDepthStencilValue(Custom_Depth_Red);
 	Weapon->SetRenderCustomDepth(true);
 	Weapon->SetCustomDepthStencilValue(Custom_Depth_Red);
+	//GetMesh()->SetOverlayMaterialMaxDrawDistance(0.f);
 }
 
 void AAuraEnemy::UnHighlightActor()
@@ -34,4 +36,5 @@ void AAuraEnemy::UnHighlightActor()
 	UE_LOG(LogTemp, Warning, TEXT("unhighlighted"))
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
+	//GetMesh()->SetOverlayMaterialMaxDrawDistance(1.f);
 }
