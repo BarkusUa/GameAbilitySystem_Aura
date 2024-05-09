@@ -13,5 +13,15 @@ UCLASS()
 class AURA_API UAuraUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetWidgetController(UObject* InwidgetController);
 	
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UObject> WidgetController;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void WidgetControllerSet();
 };
