@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GameplayEffectTypes.h"
 #include "AuraEffectActor.generated.h"
 
+class UAbilitySystemComponent;
 class UGameplayEffect;
 
 UENUM(BlueprintType)
@@ -65,5 +67,7 @@ protected:
 	TEnumAsByte<EEffectApplicationPolicy> InfiniteEffectApplicationPolicy = DoNotApply;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Applied Effects")
-	TEnumAsByte<EEffectRemovalPolicy> InfiniteEffectRemovePolicy = RemoveOnEndOverlap;
+	TEnumAsByte<EEffectRemovalPolicy> InfiniteEffectRemovalPolicy = RemoveOnEndOverlap;
+
+	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 };
