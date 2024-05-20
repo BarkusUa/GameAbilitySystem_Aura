@@ -8,9 +8,6 @@
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::EffectApplied);
-
-	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
-	UE_LOG(LogTemp, Warning, TEXT("Attribute: %s"), *GameplayTags.Attributes_Secondary_Armor.ToString());
 }
 
 void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
@@ -20,6 +17,4 @@ void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* Ability
 	EffectSpec.GetAllAssetTags(TagContainer);
 
 	EffectAssetTags.Broadcast(TagContainer);
-	
-	
 }
