@@ -32,7 +32,7 @@ UAttributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController(const
 void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	checkf(OverlayWidgetClass, TEXT("Overlay Widget class uninitialized, fill out BP_AuraHUD"));
-	checkf(OverlayWidgetControllerClass, TEXT("Overlay widget controller class is  unitilalized, fill out BP_AuraHUD"))
+	checkf(OverlayWidgetControllerClass, TEXT("Overlay widget controller class is  unitilalized, fill out BP_AuraHUD"));
 
 
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
@@ -42,7 +42,7 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
 	OverlayWidget->SetWidgetController(WidgetController);
-	WidgetController->BroadcastInitialValue();
+	WidgetController->BroadcastInitialValues();
 	Widget->AddToViewport();
 }
 
