@@ -2,6 +2,8 @@
 
 
 #include "AuraAssetManager.h"
+
+#include "AbilitySystemGlobals.h"
 #include "AuraGameplayTags.h"
 
 UAuraAssetManager& UAuraAssetManager::Get()
@@ -14,6 +16,8 @@ UAuraAssetManager& UAuraAssetManager::Get()
 void UAuraAssetManager::StartInitialLoading()
 {
 	Super::StartInitialLoading();
-
 	FAuraGameplayTags::InitializeNativeGameplayTags();
+	
+	//this is required for target data!
+	UAbilitySystemGlobals::Get().InitGlobalData();
 }
