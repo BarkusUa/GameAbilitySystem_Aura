@@ -4,6 +4,7 @@
 #include "AbilitySystem/ExecCalc/ExcCalc_Damage.h"
 
 #include "AbilitySystemComponent.h"
+#include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
@@ -75,6 +76,10 @@ void UExcCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	
 	//If block, halve the damage
 	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
+
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
+	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
+	
 	Damage = bBlocked ? Damage * 0.5 : Damage;
 	
 	//Armor and armor penetration
@@ -117,6 +122,9 @@ void UExcCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	//Critical Hit Resistance reduces crit hit chance by percent and doubling if the crit chance ok
 	const float EffectiveCriticalHitChance = SourceCriticalHitChance - TargetCriticalHitResistance * EffectiveCriticalHitResistanceCoefficient;
 	const bool bCriticalHit = FMath::RandRange(0, 100) < EffectiveCriticalHitChance;
+
+	UAuraAbilitySystemLibrary::SetIsCriticalHit(EffectContextHandle, bCriticalHit);
+	
 	Damage = bCriticalHit ? Damage = 2.f * Damage + SourceCriticalHitDamage : Damage;
 	
 	const FGameplayModifierEvaluatedData EvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute(), EGameplayModOp::Additive, Damage);
