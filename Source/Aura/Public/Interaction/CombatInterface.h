@@ -36,4 +36,10 @@ public:
 	UAnimMontage* GetHitReactMontage();
 
 	virtual void Die() = 0;      //0 means pure func...
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool IsDead() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	AActor* GetAvatar();
 };
