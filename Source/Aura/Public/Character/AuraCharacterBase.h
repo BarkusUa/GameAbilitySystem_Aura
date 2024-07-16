@@ -52,10 +52,13 @@ protected:
 	FName WeaponTipSocketName;
 
 	UPROPERTY(EditAnywhere, Category="Combat")
-	FName LeftHandTipSocketName;
+	FName LeftHandSocketName;
 
 	UPROPERTY(EditAnywhere, Category="Combat")
-	FName RightHandTipSocketName;
+	FName RightHandSocketName;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	FName TailSocketName;
 
 	bool bDead = false;
 
