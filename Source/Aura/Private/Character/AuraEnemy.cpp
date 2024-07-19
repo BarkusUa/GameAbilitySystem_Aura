@@ -66,7 +66,7 @@ void AAuraEnemy::UnHighlightActor()
 	//GetMesh()->SetOverlayMaterialMaxDrawDistance(1.f);
 }
 
-int32 AAuraEnemy::GetPlayerLevel()
+int32 AAuraEnemy::GetPlayerLevel_Implementation()
 {
 	return Level;
 }
