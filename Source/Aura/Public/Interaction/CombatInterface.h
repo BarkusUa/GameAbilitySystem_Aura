@@ -62,7 +62,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	UAnimMontage* GetHitReactMontage();
 
-	virtual void Die() = 0;      //0 means pure func...
+	virtual void Die(const FVector& DeathImpulse) = 0;      //0 means pure func...
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool IsDead() const;
