@@ -195,10 +195,13 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 				Props.TargetCharacter->LaunchCharacter(KnockbackForce, true, true);
 			}
 		}
-			
+		
 		const bool bBlock = UAuraAbilitySystemLibrary::IsBlockedHit(Props.EffectContextHandle);
 		const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(Props.EffectContextHandle);
-		ShowFloatingText(Props, LocalIncomingDamage, bBlock, bCriticalHit);
+		if (Props.SourceCharacter && Props.SourceASC)
+		{
+			ShowFloatingText(Props, LocalIncomingDamage, bBlock, bCriticalHit);
+		}
 		if (UAuraAbilitySystemLibrary::IsSuccessfulDebuff(Props.EffectContextHandle))
 		{
 			Debuff(Props);
