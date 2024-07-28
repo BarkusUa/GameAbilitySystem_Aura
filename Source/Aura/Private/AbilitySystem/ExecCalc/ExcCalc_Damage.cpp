@@ -10,6 +10,7 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
 
 struct AuraDamageStatics
 {
@@ -137,6 +138,7 @@ void UExcCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	}
 
 	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedSourceTags.GetAggregatedTags();
@@ -165,7 +167,34 @@ void UExcCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 		Resistance = FMath::Clamp(Resistance, 0.f, 100.f);
 
 		DamageTypeValue *= ( 100.f - Resistance) / 100.f;
+
+		if (UAuraAbilitySystemLibrary::IsRadialDamage(EffectContextHandle))
+		{
+			if(ICombatInterface* CombatInterface = Cast<ICombatInterface>(TargetAvatar))
+			{
+				CombatInterface->GetOnDamageSignature().AddLambda([&](float DamageAmount)
+				{
+					DamageTypeValue = DamageAmount;
+				});
+			}
+			UGameplayStatics::ApplyRadialDamageWithFalloff(
+				TargetAvatar,
+				DamageTypeValue,
+				0.f,
+				UAuraAbilitySystemLibrary::GetRadialDamageOrigin(EffectContextHandle),
+				UAuraAbilitySystemLibrary::GetRadialDamageInnerRadius(EffectContextHandle),
+				UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(EffectContextHandle),
+				1.f,
+				UDamageType::StaticClass(),
+				TArray<AActor*>(),
+				SourceAvatar,
+				nullptr
+				);
+		}
+		
 		Damage += DamageTypeValue;
+
+		
 	}
 	
 	// Capture block chance from target, and determine if there was a successful block
@@ -175,8 +204,7 @@ void UExcCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	
 	//If block, halve the damage
 	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
-
-	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
+	
 	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
 	
 	Damage = bBlocked ? Damage * 0.5 : Damage;
