@@ -19,7 +19,6 @@ class AURA_API AAuraProjectile : public AActor
 public:	
 	
 	AAuraProjectile();
-	void OnHit();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
@@ -34,15 +33,20 @@ protected:
 
 	virtual void Destroyed() override;
 	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable)
+	void OnHit();
+	
 	UFUNCTION()
 	virtual void OnSphereOverlap(UPrimitiveComponent* OnOverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	bool IsValidOverlap(AActor* OtherActor);
+	bool bHit = false;
+	
 private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LifeSpan = 50.f;
-	
-	bool bHit = false;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent> Sphere;
