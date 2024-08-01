@@ -55,9 +55,9 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 void AAuraEnemy::HighlightActor()
 {
 	GetMesh()->SetRenderCustomDepth(true);
-	GetMesh()->SetCustomDepthStencilValue(Custom_Depth_Red);
+	GetMesh()->SetCustomDepthStencilValue(Custom_Depth_RED);
 	Weapon->SetRenderCustomDepth(true);
-	Weapon->SetCustomDepthStencilValue(Custom_Depth_Red);
+	Weapon->SetCustomDepthStencilValue(Custom_Depth_RED);
 	//GetMesh()->SetOverlayMaterialMaxDrawDistance(0.f);
 }
 
