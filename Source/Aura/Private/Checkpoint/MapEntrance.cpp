@@ -21,7 +21,7 @@ void AMapEntrance::HighlightActor_Implementation()
 
 void AMapEntrance::LoadActor_Implementation()
 {
-	// Clears parent classes funct...
+	// Clears parent classes function...
 }
 
 void AMapEntrance::OnSphereOverlap(UPrimitiveComponent* OnOverlappedComponent, AActor* OtherActor,

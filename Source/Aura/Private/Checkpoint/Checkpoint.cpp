@@ -14,7 +14,6 @@ ACheckpoint::ACheckpoint(const FObjectInitializer& ObjectInitializer)
 	PrimaryActorTick.bCanEverTick = false;
 
 	CheckpointMesh = CreateDefaultSubobject<UStaticMeshComponent>("CheckpointMesh");
-	CheckpointMesh->SetupAttachment(GetRootComponent());
 	CheckpointMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	CheckpointMesh->SetCollisionResponseToAllChannels(ECR_Block);
 
@@ -48,7 +47,11 @@ void ACheckpoint::OnSphereOverlap(UPrimitiveComponent* OnOverlappedComponent, AA
 
 		if (AAuraGameModeBase* AuraGM = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 		{
-			AuraGM->SaveWorldState(GetWorld());
+			const UWorld* World = GetWorld();
+			FString MapName = World->GetMapName();
+			MapName.RemoveFromStart(World->StreamingLevelsPrefix);
+			
+			AuraGM->SaveWorldState(GetWorld(), MapName);
 		}
 		
 		IPlayerInterface::Execute_SaveProgress(OtherActor, PlayerStartTag);
