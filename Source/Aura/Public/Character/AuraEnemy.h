@@ -24,10 +24,10 @@ public:
 	AAuraEnemy();
 	virtual void PossessedBy(AController* NewController) override;
 
-	//HighlighInterface
-	virtual void HighlightActor() override;
-	virtual void UnHighlightActor() override;
-	//end HighlighInterface
+	//Highligh Interface
+	virtual void HighlightActor_Implementation() override;
+	virtual void UnHighlightActor_Implementation() override;
+	//end Highligh Interface
 
 	/* Combat Interface */
 	virtual int32 GetPlayerLevel_Implementation() override;

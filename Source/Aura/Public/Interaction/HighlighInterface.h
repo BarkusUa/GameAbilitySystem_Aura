@@ -7,7 +7,7 @@
 #include "HighlighInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, BlueprintType)
 class UHighlighInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -23,7 +23,10 @@ class AURA_API IHighlighInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 
-	// = 0 means pure function 
-	virtual void HighlightActor() = 0;
-	virtual void UnHighlightActor() = 0;
+	// = 0 means pure function
+	UFUNCTION(BlueprintNativeEvent)
+	void HighlightActor();
+	
+	UFUNCTION(BlueprintNativeEvent)
+	void UnHighlightActor();
 };
